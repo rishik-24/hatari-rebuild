@@ -1,7 +1,7 @@
 import { Colors } from "@/utils/Colors";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   Pressable,
@@ -13,6 +13,8 @@ import {
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function Index() {
+  const router = useRouter();
+
   const [selected, setSelected] = React.useState("");
   const [preference, setPreference] = React.useState("");
 

@@ -3,15 +3,17 @@ export const Colors = {
   secondary: "#f9236eff",
   hatari: {
     red: "#ef183c",
-    darkGrey: "#374151",
+    darkGrey: "#3a4557",
     lightGrey: "#9CA3AF",
+    ratingBG: "#018a0a",
+    starColor: "#ecdc00",
   },
 
   light: {
-    background: "#FFFFFF",
-    text: "#374151",
+    background: "#f8f9fa",
+    text: "#2f3845",
     card: "#FFFFFF",
-    border: "#E5E7EB",
+    border: "#e9ecef",
   },
 };
 

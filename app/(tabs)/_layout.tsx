@@ -1,40 +1,29 @@
 import { Colors } from "@/utils/Colors";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import {
+  AntDesign,
+  Feather,
+  FontAwesome5,
+  FontAwesome6,
+  SimpleLineIcons,
+} from "@expo/vector-icons";
+import { Image } from "expo-image";
 import { Tabs } from "expo-router";
-import React from "react";
-
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-}) {
-  return (
-    <FontAwesome
-      size={28}
-      style={{ marginBottom: -3 }}
-      {...props}
-    />
-  );
-}
+import React, { useState } from "react";
+import { View } from "react-native";
 
 export default function TabLayout() {
+  const [selected, setSelected] = useState<string>("");
+
   return (
     <Tabs
       screenOptions={{
-        tabBarStyle: {
-          height: 60,
-        },
+        headerShown: true,
+        tabBarStyle: {},
         tabBarInactiveTintColor: "gray",
         tabBarActiveTintColor: Colors.hatari.red,
-        tabBarLabelStyle: {
-          fontSize: 12,
-        },
+        tabBarLabelStyle: { fontSize: 12 },
         tabBarLabelPosition: "below-icon",
-        animation: "shift",
-        headerTitleStyle: {
-          fontWeight: "bold",
-        },
+        headerTitleStyle: { fontWeight: "bold" },
       }}>
       <Tabs.Screen
         name="home"
@@ -47,15 +36,77 @@ export default function TabLayout() {
               color={color}
             />
           ),
+
+          headerStyle: { shadowOpacity: 0, elevation: 0 },
+
+          headerLeft: () => (
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                paddingHorizontal: 10,
+                gap: 6,
+              }}>
+              <FontAwesome6
+                name="location-dot"
+                size={24}
+                color={Colors.hatari.red}
+              />
+            </View>
+          ),
+          headerTitle: "Hatari (Madhyamgram)",
+
+          headerRight: () => (
+            <View style={{ paddingRight: 10 }}>
+              <Image
+                style={{
+                  width: 70,
+                  height: 50,
+                  borderRadius: 10,
+                }}
+                source={require("../../assets/images/hatari-logo-2.jpg")}
+                transition={1000}
+              />
+            </View>
+          ),
         }}
       />
+
       <Tabs.Screen
-        name="settings"
+        name="myorders"
         options={{
-          title: "Settings",
+          title: "My Orders",
           tabBarIcon: ({ color }) => (
-            <Ionicons
-              name="settings"
+            <AntDesign
+              name="unordered-list"
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="menu"
+        options={{
+          title: "Menu",
+          tabBarIcon: ({ color }) => (
+            <SimpleLineIcons
+              name="notebook"
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color }) => (
+            <Feather
+              name="user"
               size={24}
               color={color}
             />

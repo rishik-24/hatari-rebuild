@@ -1,11 +1,12 @@
-import ThemeProvider from "@/src/theme/ThemeContext";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
+
 import "react-native-reanimated";
 
 export {
@@ -51,7 +52,7 @@ function RootLayoutNav() {
   return (
     <>
       <StatusBar style={"dark"} />
-      <ThemeProvider Children={<Slot />} />
+      <Slot />
     </>
   );
 }
