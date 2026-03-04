@@ -12,7 +12,7 @@ export const Colors = {
   light: {
     background: "#f8f9fa",
     text: "#2f3845",
-    card: "#FFFFFF",
+    card: "#F3F3F3",
     border: "#e9ecef",
   },
 };

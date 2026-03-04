@@ -22,6 +22,7 @@ const FeatureBanners = () => {
     <View>
       <Carousel
         loop
+        autoPlay
         width={ITEM_WIDTH}
         height={BANNER_HEIGHT}
         data={IMAGES}

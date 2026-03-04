@@ -104,7 +104,7 @@ export default function Index() {
                 selected === "madhyamgram"
                   ? Colors.hatari.red
                   : Colors.light.border,
-              backgroundColor: Colors.light.card,
+              backgroundColor: Colors.light.background,
               borderRadius: 12,
               paddingVertical: 20,
             }}>
@@ -143,7 +143,7 @@ export default function Index() {
                     preference === items.value
                       ? Colors.hatari.red
                       : Colors.light.border,
-                  backgroundColor: Colors.light.card,
+                  backgroundColor: Colors.light.background,
                   borderRadius: 12,
                 }}>
                 {items.icon}

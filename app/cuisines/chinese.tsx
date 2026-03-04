@@ -1,4 +1,3 @@
-import HomeFoodCard from "@/components/FoodCards/HomeFoodCard";
 import CustomStack from "@/components/Stack/CustomStack";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
@@ -11,7 +10,7 @@ const chinese = () => {
       </View>
 
       <ScrollView style={{ paddingVertical: 20, paddingHorizontal: 10 }}>
-        <HomeFoodCard />
+        {/* <HomeFoodCard /> */}
       </ScrollView>
     </>
   );
