@@ -2,10 +2,11 @@ import QuantityBTN from "@/components/Buttons/QuantityBTN";
 import { cartAtom } from "@/src/Store/cartAtom";
 import { Colors } from "@/utils/Colors";
 import { foods } from "@/utils/demoFoodData";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { Food } from "@/utils/types";
+import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useAtom } from "jotai";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -15,9 +16,12 @@ import {
   View,
 } from "react-native";
 
+interface Props {
+  food: Food;
+}
+
 export default function FoodDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const router = useRouter();
 
   const food = foods.find((item) => item.id === id);
 
@@ -28,6 +32,13 @@ export default function FoodDetails() {
       </View>
     );
   }
+
+  const formattedReviews = useMemo(() => {
+    if (food.reviewsCount >= 1000) {
+      return `${(food.reviewsCount / 1000).toFixed(1)}K`;
+    }
+    return food.reviewsCount.toString();
+  }, [food.reviewsCount]);
 
   const [quantity, setQuantity] = useState(1);
   const totalPrice = food.price * quantity;
@@ -132,7 +143,7 @@ export default function FoodDetails() {
             backgroundColor: Colors.hatari.ratingBG,
           }}>
           <Text style={{ color: Colors.light.background, fontSize: 14 }}>
-            {food.reviewsCount}
+            {formattedReviews}
           </Text>
           <Text>⭐</Text>
           <Text style={{ color: Colors.light.background, fontSize: 14 }}>

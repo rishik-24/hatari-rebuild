@@ -2,6 +2,7 @@ import CustomStack from "@/components/Stack/CustomStack";
 import { cartAtom } from "@/src/Store/cartAtom";
 import { Colors } from "@/utils/Colors";
 import { Feather } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useAtom } from "jotai";
 import {
   Image,
@@ -49,7 +50,7 @@ export default function CartScreen() {
     <>
       <CustomStack />
       <ScrollView style={styles.container}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("/(tabs)/home")}>
           <Text style={styles.addMore}>+ Add more Items</Text>
         </TouchableOpacity>
 
@@ -98,23 +99,44 @@ export default function CartScreen() {
 
               <Text style={styles.price}>₹{item.price}</Text>
 
-              <View style={styles.qtyRow}>
-                <TouchableOpacity
-                  style={styles.qtyBtn}
-                  onPress={() => decreaseQty(item.id)}>
-                  <Text>-</Text>
-                </TouchableOpacity>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}>
+                <View style={styles.qtyRow}>
+                  <TouchableOpacity
+                    style={styles.qtyBtn}
+                    onPress={() => decreaseQty(item.id)}>
+                    <Text>-</Text>
+                  </TouchableOpacity>
 
-                <Text style={styles.qtyText}>{item.quantity}</Text>
+                  <Text style={styles.qtyText}>{item.quantity}</Text>
 
-                <TouchableOpacity
-                  style={[
-                    styles.qtyBtn,
-                    { backgroundColor: Colors.hatari.red },
-                  ]}
-                  onPress={() => increaseQty(item.id)}>
-                  <Text style={{ color: "#fff" }}>+</Text>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[
+                      styles.qtyBtn,
+                      { backgroundColor: Colors.hatari.red },
+                    ]}
+                    onPress={() => increaseQty(item.id)}>
+                    <Text style={{ color: "#fff" }}>+</Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 6,
+                  }}>
+                  <Text style={{ fontSize: 16 }}>x{item.quantity}</Text>
+
+                  <Text style={{}}>•</Text>
+
+                  <Text style={{ fontSize: 16 }}>
+                    ₹{item.price * item.quantity}
+                  </Text>
+                </View>
               </View>
             </View>
           </View>

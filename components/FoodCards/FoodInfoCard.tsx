@@ -1,9 +1,18 @@
+import { cartAtom } from "@/src/Store/cartAtom";
 import { Colors } from "@/utils/Colors";
 import { Food } from "@/utils/types";
 import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { useAtom } from "jotai";
 import React, { useMemo, useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 interface Props {
   food: Food;
@@ -11,6 +20,7 @@ interface Props {
 
 const FoodInfoCard: React.FC<Props> = ({ food }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const formattedReviews = useMemo(() => {
     if (food.reviewsCount >= 1000) {
@@ -18,6 +28,48 @@ const FoodInfoCard: React.FC<Props> = ({ food }) => {
     }
     return food.reviewsCount.toString();
   }, [food.reviewsCount]);
+
+  // Toast
+
+  const showToastWithGravity = () => {
+    ToastAndroid.showWithGravity(
+      "Food added to cart",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+    );
+  };
+
+  // Add To Cart Function //
+
+  const [cart, setCart] = useAtom(cartAtom);
+
+  const handleAddToCart = () => {
+    const existing = cart.find((item) => item.id === food.id);
+
+    if (existing) {
+      setCart(
+        cart.map((item) =>
+          item.id === food.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item,
+        ),
+      );
+    } else {
+      setCart([
+        ...cart,
+        {
+          id: food.id,
+          name: food.name,
+          price: food.price,
+          image: food.image,
+          quantity: quantity,
+          isVeg: food.isVeg,
+        },
+      ]);
+    }
+
+    showToastWithGravity();
+  };
 
   const router = useRouter();
 
@@ -103,7 +155,7 @@ const FoodInfoCard: React.FC<Props> = ({ food }) => {
                 gap: 4,
               }}>
               <Text style={{ color: Colors.light.background }}>
-                {food.reviewsCount}
+                {formattedReviews}
               </Text>
               <View style={{ marginHorizontal: 3 }}>
                 <AntDesign
@@ -117,6 +169,7 @@ const FoodInfoCard: React.FC<Props> = ({ food }) => {
               </Text>
             </View>
             <TouchableOpacity
+              onPress={handleAddToCart}
               hitSlop={20}
               style={{
                 width: 60,
