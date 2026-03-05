@@ -1,8 +1,10 @@
 import QuantityBTN from "@/components/Buttons/QuantityBTN";
+import { cartAtom } from "@/src/Store/cartAtom";
 import { Colors } from "@/utils/Colors";
 import { foods } from "@/utils/demoFoodData";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useAtom } from "jotai";
 import { useState } from "react";
 import {
   Image,
@@ -37,6 +39,40 @@ export default function FoodDetails() {
       ToastAndroid.BOTTOM,
     );
   };
+
+  // Add To Cart Function //
+
+  const [cart, setCart] = useAtom(cartAtom);
+
+  const handleAddToCart = () => {
+    const existing = cart.find((item) => item.id === food.id);
+
+    if (existing) {
+      setCart(
+        cart.map((item) =>
+          item.id === food.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item,
+        ),
+      );
+    } else {
+      setCart([
+        ...cart,
+        {
+          id: food.id,
+          name: food.name,
+          price: food.price,
+          image: food.image,
+          quantity,
+          isVeg: food.isVeg,
+        },
+      ]);
+    }
+
+    showToastWithGravity();
+  };
+
+  //
 
   return (
     <>
@@ -127,7 +163,7 @@ export default function FoodDetails() {
         />
 
         <TouchableOpacity
-          onPress={() => showToastWithGravity()}
+          onPress={handleAddToCart}
           style={{
             alignSelf: "center",
             paddingHorizontal: 20,

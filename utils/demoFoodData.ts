@@ -226,10 +226,10 @@ export const foods: Food[] = [
 
   {
     id: "701",
-    name: "Kolkata Chicken Hakka Noodles",
+    name: "Chicken Hakka Noodles",
     price: 180,
     image:
-      "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?q=80&w=800&auto=format&fit=crop",
+      "https://mymagicingredient.com/wp-content/uploads/2019/10/hakkanoodles-babycorn-7650.jpg",
     description:
       "Street-style Kolkata hakka noodles with chicken and vegetables.",
     isVeg: false,
@@ -240,10 +240,10 @@ export const foods: Food[] = [
 
   {
     id: "702",
-    name: "Veg Chowmein (Kolkata Street Style)",
+    name: "Veg Chowmein",
     price: 140,
     image:
-      "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=800&auto=format&fit=crop",
+      "https://i.pinimg.com/736x/a5/ce/43/a5ce43bb6898d7599745e8cc2c63c5e0.jpg",
     description:
       "Kolkata street-style chowmein tossed with vegetables and sauces.",
     isVeg: true,
@@ -287,7 +287,7 @@ export const foods: Food[] = [
     name: "Chicken Fried Rice",
     price: 190,
     image:
-      "https://images.unsplash.com/photo-1603133872878-684f208fb84b?q=80&w=800&auto=format&fit=crop",
+      "https://www.sharmispassions.com/wp-content/uploads/2018/03/chicken-fried-rice7.jpg",
     description:
       "Kolkata-style chicken fried rice tossed with soy sauce and vegetables.",
     isVeg: false,
@@ -298,13 +298,12 @@ export const foods: Food[] = [
 
   {
     id: "902",
-    name: "Egg Fried Rice",
+    name: "Veg Fried Rice",
     price: 160,
     image:
-      "https://images.unsplash.com/photo-1512058564366-c9e3e0460b41?q=80&w=800&auto=format&fit=crop",
-    description:
-      "Classic Kolkata egg fried rice with scrambled egg and spices.",
-    isVeg: false,
+      "https://s.lightorangebean.com/media/20240914150137/Extra-Veggie-Fried-Rice_done-500x375.png",
+    description: "Classic Kolkata Veg fried rice with spices.",
+    isVeg: true,
     categoryId: "9",
     rating: 4.3,
     reviewsCount: 2200,

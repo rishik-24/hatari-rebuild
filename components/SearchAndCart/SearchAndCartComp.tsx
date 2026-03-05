@@ -1,12 +1,18 @@
-import { AntDesign } from "@expo/vector-icons";
+import { cartAtom } from "@/src/Store/cartAtom";
+import { Colors } from "@/utils/Colors";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { useAtom } from "jotai";
 import React from "react";
-import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Searchbar } from "react-native-paper";
 
 const SearchAndCartComp = () => {
-  const { width } = Dimensions.get("window");
-
   const [searchQuery, setSearchQuery] = React.useState("");
+
+  const [cart] = useAtom(cartAtom);
+
+  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   return (
     <View
       style={{
@@ -32,22 +38,44 @@ const SearchAndCartComp = () => {
         onChangeText={setSearchQuery}
         value={searchQuery}
       />
-      <TouchableOpacity
-        style={{
-          height: 60,
-          width: 80,
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: 30,
-          borderWidth: 1,
-          borderColor: "gray",
-        }}>
-        <AntDesign
-          name="shopping-cart"
-          size={24}
-          color="gray"
-        />
-      </TouchableOpacity>
+      <View style={{ position: "relative" }}>
+        <TouchableOpacity
+          onPress={() => router.push("/Orders/mycart")}
+          style={{
+            borderRadius: 50,
+            borderWidth: 1,
+            borderColor: "gray",
+            height: 60,
+            width: 60,
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+          <Ionicons
+            name="cart-outline"
+            size={24}
+            color={Colors.hatari.darkGrey}
+          />
+        </TouchableOpacity>
+
+        {cartCount > 0 && (
+          <View
+            style={{
+              position: "absolute",
+              top: -6,
+              right: -6,
+              backgroundColor: "#ff3b30",
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              justifyContent: "center",
+              alignItems: "center",
+            }}>
+            <Text style={{ color: "white", fontSize: 12, fontWeight: "bold" }}>
+              {cartCount}
+            </Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 };
