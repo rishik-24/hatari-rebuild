@@ -226,7 +226,7 @@ export const foods: Food[] = [
 
   {
     id: "701",
-    name: "Chicken Hakka Noodles",
+    name: "Hakka Noodles",
     price: 180,
     image:
       "https://mymagicingredient.com/wp-content/uploads/2019/10/hakkanoodles-babycorn-7650.jpg",
@@ -269,7 +269,7 @@ export const foods: Food[] = [
 
   {
     id: "802",
-    name: "Chicken Sweet Corn Soup",
+    name: "Sweet Corn Soup",
     price: 130,
     image:
       "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?q=80&w=800&auto=format&fit=crop",

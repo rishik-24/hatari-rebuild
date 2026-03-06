@@ -1,11 +1,13 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Toast from "react-native-toast-message";
 
 import "react-native-reanimated";
 
@@ -51,8 +53,13 @@ function RootLayoutNav() {
 
   return (
     <>
-      <StatusBar style={"dark"} />
-      <Slot />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <BottomSheetModalProvider>
+          <StatusBar style="dark" />
+          <Slot />
+          <Toast />
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </>
   );
 }

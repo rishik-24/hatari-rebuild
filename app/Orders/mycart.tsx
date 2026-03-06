@@ -1,9 +1,12 @@
+import AddressSheet from "@/components/Modal/AddressSheet";
 import CustomStack from "@/components/Stack/CustomStack";
 import { cartAtom } from "@/src/Store/cartAtom";
 import { Colors } from "@/utils/Colors";
 import { Feather } from "@expo/vector-icons";
+import BottomSheet from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
 import { useAtom } from "jotai";
+import { useRef } from "react";
 import {
   Image,
   ScrollView,
@@ -40,150 +43,147 @@ export default function CartScreen() {
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  // GST and Packing should be 0 if cart is empty
   const GST = total > 0 ? 40 : 0;
   const PACKING = total > 0 ? 20 : 0;
 
   const grandTotal = total + GST + PACKING;
 
+  const sheetRef = useRef<BottomSheet>(null);
+
+  const openSheet = () => {
+    sheetRef.current?.expand();
+  };
+
   return (
     <>
       <CustomStack />
-      <ScrollView style={styles.container}>
-        <TouchableOpacity onPress={() => router.push("/(tabs)/home")}>
-          <Text style={styles.addMore}>+ Add more Items</Text>
-        </TouchableOpacity>
 
-        {cart.map((item) => (
-          <View
-            key={item.id}
-            style={styles.card}>
-            <Image
-              source={{ uri: item.image }}
-              style={styles.image}
-            />
+      <View style={{ flex: 1 }}>
+        <ScrollView
+          style={styles.container}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 200 }}>
+          <TouchableOpacity onPress={() => router.push("/(tabs)/home")}>
+            <Text style={styles.addMore}>+ Add more Items</Text>
+          </TouchableOpacity>
 
+          {cart.map((item) => (
             <View
-              style={{
-                flex: 1,
-                justifyContent: "space-between",
-                paddingVertical: 4,
-              }}>
-              <View style={styles.row}>
-                <View style={{ flexDirection: "row", gap: 6 }}>
-                  <View
-                    style={[
-                      styles.vegIndicator,
-                      { borderColor: item.isVeg ? "green" : "red" },
-                    ]}>
+              key={item.id}
+              style={styles.card}>
+              <Image
+                source={{ uri: item.image }}
+                style={styles.image}
+              />
+
+              <View style={styles.cardContent}>
+                <View style={styles.row}>
+                  <View style={{ flexDirection: "row", gap: 6 }}>
                     <View
-                      style={{
-                        width: 8,
-                        height: 8,
-                        backgroundColor: item.isVeg ? "green" : "red",
-                      }}
-                    />
+                      style={[
+                        styles.vegIndicator,
+                        { borderColor: item.isVeg ? "green" : "red" },
+                      ]}>
+                      <View
+                        style={{
+                          width: 8,
+                          height: 8,
+                          backgroundColor: item.isVeg ? "green" : "red",
+                        }}
+                      />
+                    </View>
+
+                    <Text style={styles.foodName}>{item.name}</Text>
                   </View>
 
-                  <Text style={styles.foodName}>{item.name}</Text>
-                </View>
-
-                <TouchableOpacity onPress={() => removeItem(item.id)}>
-                  <Feather
-                    name="trash-2"
-                    size={18}
-                    color="red"
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <Text style={styles.price}>₹{item.price}</Text>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}>
-                <View style={styles.qtyRow}>
-                  <TouchableOpacity
-                    style={styles.qtyBtn}
-                    onPress={() => decreaseQty(item.id)}>
-                    <Text>-</Text>
-                  </TouchableOpacity>
-
-                  <Text style={styles.qtyText}>{item.quantity}</Text>
-
-                  <TouchableOpacity
-                    style={[
-                      styles.qtyBtn,
-                      { backgroundColor: Colors.hatari.red },
-                    ]}
-                    onPress={() => increaseQty(item.id)}>
-                    <Text style={{ color: "#fff" }}>+</Text>
+                  <TouchableOpacity onPress={() => removeItem(item.id)}>
+                    <Feather
+                      name="trash-2"
+                      size={18}
+                      color="#ff4d4d"
+                    />
                   </TouchableOpacity>
                 </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 6,
-                  }}>
-                  <Text style={{ fontSize: 16 }}>x{item.quantity}</Text>
 
-                  <Text style={{}}>•</Text>
+                <Text style={styles.price}>₹{item.price}</Text>
 
-                  <Text style={{ fontSize: 16 }}>
-                    ₹{item.price * item.quantity}
-                  </Text>
+                <View style={styles.bottomRow}>
+                  <View style={styles.qtyRow}>
+                    <TouchableOpacity
+                      style={styles.qtyBtn}
+                      onPress={() => decreaseQty(item.id)}>
+                      <Feather
+                        name="minus"
+                        size={14}
+                      />
+                    </TouchableOpacity>
+
+                    <Text style={styles.qtyText}>{item.quantity}</Text>
+
+                    <TouchableOpacity
+                      style={[styles.qtyBtn, styles.plusBtn]}
+                      onPress={() => increaseQty(item.id)}>
+                      <Feather
+                        name="plus"
+                        size={14}
+                        color="#fff"
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 6,
+                    }}>
+                    <Text>x{item.quantity}</Text>
+                    <Text>•</Text>
+                    <Text style={styles.itemTotal}>
+                      ₹{item.price * item.quantity}
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
+          ))}
+
+          {/* BILL CARD (scrolls with content) */}
+          <View style={styles.billCard}>
+            <View style={styles.billRow}>
+              <Text>Total</Text>
+              <Text>₹{total}</Text>
+            </View>
+
+            <View style={styles.billRow}>
+              <Text>GST</Text>
+              <Text>₹{GST}</Text>
+            </View>
+
+            <View style={styles.billRow}>
+              <Text>Packing fee</Text>
+              <Text>₹{PACKING}</Text>
+            </View>
+
+            <View style={styles.divider} />
+
+            <View style={styles.billRow}>
+              <Text style={styles.grand}>Grand Total</Text>
+              <Text style={styles.grand}>₹{grandTotal}</Text>
+            </View>
           </View>
-        ))}
+        </ScrollView>
 
-        {/* Note Box */}
-        {/* <View style={styles.noteCard}>
-          <TextInput
-            placeholder="Tell us what you want"
-            multiline
-            style={styles.input}
-          />
-
-          <TouchableOpacity style={styles.updateBtn}>
-            <Text style={styles.btnText}>Update</Text>
-          </TouchableOpacity>
-        </View> */}
-
-        {/* Bill Section */}
-        <View style={styles.billCard}>
-          <View style={styles.billRow}>
-            <Text>Total</Text>
-            <Text>₹{total}</Text>
-          </View>
-
-          <View style={styles.billRow}>
-            <Text>GST</Text>
-            <Text>₹{GST}</Text>
-          </View>
-
-          <View style={styles.billRow}>
-            <Text>Packing fee</Text>
-            <Text>₹{PACKING}</Text>
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.billRow}>
-            <Text style={{ fontWeight: "bold" }}>Grand Total</Text>
-            <Text style={{ fontWeight: "bold" }}>₹{grandTotal}</Text>
-          </View>
-
-          <TouchableOpacity style={styles.continueBtn}>
-            <Text style={styles.btnText}>Continue</Text>
+        {/* STICKY CONTINUE BUTTON */}
+        <View style={styles.stickyFooter}>
+          <TouchableOpacity
+            style={styles.continueBtn}
+            onPress={openSheet}>
+            <Text style={styles.btnText}>₹{grandTotal} • Continue</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+
+        <AddressSheet ref={sheetRef} />
+      </View>
     </>
   );
 }
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    padding: 10,
+    padding: 12,
   },
 
   addMore: {
@@ -211,7 +211,16 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
 
-  image: { width: 100, height: 100, borderRadius: 10 },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+  },
+
+  cardContent: {
+    flex: 1,
+    justifyContent: "space-between",
+  },
 
   row: {
     flexDirection: "row",
@@ -219,11 +228,28 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  foodName: { fontSize: 16, fontWeight: "600" },
+  foodName: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
 
-  price: { marginVertical: 4, fontSize: 14, fontWeight: "600" },
+  price: {
+    marginVertical: 4,
+    fontSize: 14,
+    fontWeight: "600",
+  },
 
-  qtyRow: { flexDirection: "row", alignItems: "center", gap: 10 },
+  bottomRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  qtyRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
 
   qtyBtn: {
     width: 28,
@@ -234,9 +260,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  qtyText: { fontWeight: "bold" },
+  plusBtn: {
+    backgroundColor: Colors.hatari.red,
+  },
 
-  custom: { marginTop: 6, fontSize: 12, color: "#666" },
+  qtyText: {
+    fontWeight: "bold",
+  },
+
+  itemTotal: {
+    fontWeight: "600",
+    fontSize: 15,
+  },
 
   vegIndicator: {
     width: 14,
@@ -246,34 +281,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  noteCard: {
-    padding: 14,
-    backgroundColor: "#f5f5f5",
-    borderRadius: 16,
-    marginTop: 10,
-  },
-
-  input: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: 10,
-    minHeight: 80,
-  },
-
-  updateBtn: {
-    backgroundColor: "#ff4d4d",
-    marginTop: 10,
-    padding: 14,
-    borderRadius: 30,
-    alignItems: "center",
-  },
-
   billCard: {
     padding: 16,
     backgroundColor: "#f5f5f5",
     borderRadius: 16,
-    marginTop: 16,
-    marginBottom: 50,
+    marginTop: 10,
   },
 
   billRow: {
@@ -288,13 +300,32 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
 
+  grand: {
+    fontWeight: "700",
+    fontSize: 16,
+  },
+
+  stickyFooter: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 16,
+    backgroundColor: "#fff",
+    borderTopWidth: 1,
+    borderColor: "#eee",
+  },
+
   continueBtn: {
-    backgroundColor: "#ff4d4d",
+    backgroundColor: Colors.hatari.red,
     padding: 16,
     borderRadius: 30,
     alignItems: "center",
-    marginTop: 10,
   },
 
-  btnText: { color: "#fff", fontWeight: "bold" },
+  btnText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
 });

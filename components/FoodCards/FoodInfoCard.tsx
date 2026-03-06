@@ -5,14 +5,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import React, { useMemo, useState } from "react";
-import {
-  Image,
-  StyleSheet,
-  Text,
-  ToastAndroid,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 interface Props {
   food: Food;
@@ -28,16 +22,6 @@ const FoodInfoCard: React.FC<Props> = ({ food }) => {
     }
     return food.reviewsCount.toString();
   }, [food.reviewsCount]);
-
-  // Toast
-
-  const showToastWithGravity = () => {
-    ToastAndroid.showWithGravity(
-      "Food added to cart",
-      ToastAndroid.LONG,
-      ToastAndroid.BOTTOM,
-    );
-  };
 
   // Add To Cart Function //
 
@@ -68,7 +52,15 @@ const FoodInfoCard: React.FC<Props> = ({ food }) => {
       ]);
     }
 
-    showToastWithGravity();
+    // Toast
+
+    Toast.show({
+      type: "success",
+      text1: "Success!",
+      text2: "Food has successfully added to cart",
+      position: "top",
+      visibilityTime: 3000,
+    });
   };
 
   const router = useRouter();

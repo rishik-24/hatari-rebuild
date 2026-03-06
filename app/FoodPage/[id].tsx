@@ -7,14 +7,8 @@ import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useAtom } from "jotai";
 import { useMemo, useState } from "react";
-import {
-  Image,
-  StyleSheet,
-  Text,
-  ToastAndroid,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 interface Props {
   food: Food;
@@ -42,14 +36,6 @@ export default function FoodDetails() {
 
   const [quantity, setQuantity] = useState(1);
   const totalPrice = food.price * quantity;
-
-  const showToastWithGravity = () => {
-    ToastAndroid.showWithGravity(
-      "Food added to cart",
-      ToastAndroid.LONG,
-      ToastAndroid.BOTTOM,
-    );
-  };
 
   // Add To Cart Function //
 
@@ -80,7 +66,13 @@ export default function FoodDetails() {
       ]);
     }
 
-    showToastWithGravity();
+    Toast.show({
+      type: "success",
+      text1: "Success!",
+      text2: "Food has successfully added to cart",
+      position: "top",
+      visibilityTime: 3000,
+    });
   };
 
   //
