@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.card,
     borderRadius: 16,
     marginBottom: 14,
+    elevation: 4,
   },
 
   image: {

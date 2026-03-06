@@ -171,7 +171,7 @@ export default function FoodDetails() {
             alignSelf: "center",
             paddingHorizontal: 20,
             paddingVertical: 16,
-            backgroundColor: "#ff2828ff",
+            backgroundColor: Colors.hatari.red,
             borderRadius: 50,
           }}>
           <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>

@@ -2,7 +2,7 @@ export const Colors = {
   primary: "#ef183c",
   secondary: "#f9236eff",
   hatari: {
-    red: "#ef183c",
+    red: "#FF4747",
     darkGrey: "#3a4557",
     lightGrey: "#9CA3AF",
     ratingBG: "#018a0a",
