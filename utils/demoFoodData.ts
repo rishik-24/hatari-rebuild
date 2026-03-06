@@ -197,7 +197,7 @@ export const foods: Food[] = [
 
   {
     id: "601",
-    name: "Chilli Chicken (Kolkata Style)",
+    name: "Chilli Chicken",
     price: 220,
     image: "https://dragondelivery.in/wp-content/uploads/2025/02/chchd.jpeg",
     description:

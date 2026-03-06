@@ -1,5 +1,7 @@
+import { Colors } from "@/utils/Colors";
 import { Feather } from "@expo/vector-icons";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import { router } from "expo-router";
 import React, { forwardRef, useMemo } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 
@@ -18,7 +20,10 @@ const AddressSheet = forwardRef<BottomSheet>((props, ref) => {
       index={-1}
       snapPoints={snapPoints}
       enablePanDownToClose
-      handleIndicatorStyle={{ backgroundColor: "#ccc", width: 40 }}>
+      handleIndicatorStyle={{
+        backgroundColor: Colors.hatari.lightGrey,
+        width: 40,
+      }}>
       <BottomSheetView style={styles.container}>
         {/* Close Button */}
         <TouchableOpacity
@@ -27,7 +32,7 @@ const AddressSheet = forwardRef<BottomSheet>((props, ref) => {
           <Feather
             name="x"
             size={20}
-            color="#555"
+            color={Colors.hatari.lightGrey}
           />
         </TouchableOpacity>
 
@@ -71,7 +76,9 @@ const AddressSheet = forwardRef<BottomSheet>((props, ref) => {
         </TouchableOpacity>
 
         {/* Next Button */}
-        <TouchableOpacity style={styles.nextBtn}>
+        <TouchableOpacity
+          onPress={() => router.push("/Orders/payment")}
+          style={styles.nextBtn}>
           <Text style={styles.nextText}>Next</Text>
         </TouchableOpacity>
 
@@ -107,7 +114,7 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: Colors.light.card,
     borderRadius: 12,
     padding: 14,
     marginBottom: 14,
@@ -119,19 +126,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: "#ff5a5f",
+    borderColor: Colors.hatari.red,
     borderRadius: 25,
     paddingVertical: 12,
     marginTop: 10,
   },
 
   locationText: {
-    color: "#ff5a5f",
+    color: Colors.hatari.red,
     fontWeight: "500",
   },
 
   nextBtn: {
-    backgroundColor: "#ff5a5f",
+    backgroundColor: Colors.hatari.red,
     borderRadius: 25,
     paddingVertical: 14,
     alignItems: "center",
@@ -145,7 +152,7 @@ const styles = StyleSheet.create({
   },
 
   changeBtn: {
-    backgroundColor: "#666",
+    backgroundColor: Colors.hatari.darkGrey,
     borderRadius: 25,
     paddingVertical: 14,
     alignItems: "center",

@@ -1,3 +1,4 @@
+import BillCard from "@/components/Bill/BillCard";
 import AddressSheet from "@/components/Modal/AddressSheet";
 import CustomStack from "@/components/Stack/CustomStack";
 import { cartAtom } from "@/src/Store/cartAtom";
@@ -62,115 +63,117 @@ export default function CartScreen() {
         <ScrollView
           style={styles.container}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 200 }}>
+          contentContainerStyle={{ paddingBottom: 120 }}>
           <TouchableOpacity onPress={() => router.push("/(tabs)/home")}>
             <Text style={styles.addMore}>+ Add more Items</Text>
           </TouchableOpacity>
 
-          {cart.map((item) => (
-            <View
-              key={item.id}
-              style={styles.card}>
-              <Image
-                source={{ uri: item.image }}
-                style={styles.image}
+          {cart.length === 0 ? (
+            <View style={styles.emptyContainer}>
+              <Feather
+                name="shopping-cart"
+                size={60}
+                color="#ccc"
               />
+              <Text style={styles.emptyText}>Cart is empty</Text>
 
-              <View style={styles.cardContent}>
-                <View style={styles.row}>
-                  <View style={{ flexDirection: "row", gap: 6 }}>
-                    <View
-                      style={[
-                        styles.vegIndicator,
-                        { borderColor: item.isVeg ? "green" : "red" },
-                      ]}>
-                      <View
-                        style={{
-                          width: 8,
-                          height: 8,
-                          backgroundColor: item.isVeg ? "green" : "red",
-                        }}
-                      />
+              <TouchableOpacity
+                style={styles.shopBtn}
+                onPress={() => router.push("/(tabs)/home")}>
+                <Text style={styles.shopBtnText}>Browse Foods</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <>
+              {cart.map((item) => (
+                <View
+                  key={item.id}
+                  style={styles.card}>
+                  <Image
+                    source={{ uri: item.image }}
+                    style={styles.image}
+                  />
+
+                  <View style={styles.cardContent}>
+                    <View style={styles.row}>
+                      <View style={{ flexDirection: "row", gap: 6 }}>
+                        <View
+                          style={[
+                            styles.vegIndicator,
+                            { borderColor: item.isVeg ? "green" : "red" },
+                          ]}>
+                          <View
+                            style={{
+                              width: 8,
+                              height: 8,
+                              backgroundColor: item.isVeg ? "green" : "red",
+                            }}
+                          />
+                        </View>
+
+                        <Text style={styles.foodName}>{item.name}</Text>
+                      </View>
+
+                      <TouchableOpacity onPress={() => removeItem(item.id)}>
+                        <Feather
+                          name="trash-2"
+                          size={18}
+                          color="#ff4d4d"
+                        />
+                      </TouchableOpacity>
                     </View>
 
-                    <Text style={styles.foodName}>{item.name}</Text>
-                  </View>
+                    <Text style={styles.price}>₹{item.price}</Text>
 
-                  <TouchableOpacity onPress={() => removeItem(item.id)}>
-                    <Feather
-                      name="trash-2"
-                      size={18}
-                      color="#ff4d4d"
-                    />
-                  </TouchableOpacity>
-                </View>
+                    <View style={styles.bottomRow}>
+                      <View style={styles.qtyRow}>
+                        <TouchableOpacity
+                          style={styles.qtyBtn}
+                          onPress={() => decreaseQty(item.id)}>
+                          <Feather
+                            name="minus"
+                            size={14}
+                          />
+                        </TouchableOpacity>
 
-                <Text style={styles.price}>₹{item.price}</Text>
+                        <Text style={styles.qtyText}>{item.quantity}</Text>
 
-                <View style={styles.bottomRow}>
-                  <View style={styles.qtyRow}>
-                    <TouchableOpacity
-                      style={styles.qtyBtn}
-                      onPress={() => decreaseQty(item.id)}>
-                      <Feather
-                        name="minus"
-                        size={14}
-                      />
-                    </TouchableOpacity>
-
-                    <Text style={styles.qtyText}>{item.quantity}</Text>
-
-                    <TouchableOpacity
-                      style={[styles.qtyBtn, styles.plusBtn]}
-                      onPress={() => increaseQty(item.id)}>
-                      <Feather
-                        name="plus"
-                        size={14}
-                        color="#fff"
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 6,
-                    }}>
-                    <Text>x{item.quantity}</Text>
-                    <Text>•</Text>
-                    <Text style={styles.itemTotal}>
-                      ₹{item.price * item.quantity}
-                    </Text>
+                        <TouchableOpacity
+                          style={[styles.qtyBtn, styles.plusBtn]}
+                          onPress={() => increaseQty(item.id)}>
+                          <Feather
+                            name="plus"
+                            size={14}
+                            color="#fff"
+                          />
+                        </TouchableOpacity>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          gap: 6,
+                        }}>
+                        <Text>x{item.quantity}</Text>
+                        <Text>•</Text>
+                        <Text style={styles.itemTotal}>
+                          ₹{item.price * item.quantity}
+                        </Text>
+                      </View>
+                    </View>
                   </View>
                 </View>
-              </View>
-            </View>
-          ))}
+              ))}
 
-          {/* BILL CARD (scrolls with content) */}
-          <View style={styles.billCard}>
-            <View style={styles.billRow}>
-              <Text>Total</Text>
-              <Text>₹{total}</Text>
-            </View>
-
-            <View style={styles.billRow}>
-              <Text>GST</Text>
-              <Text>₹{GST}</Text>
-            </View>
-
-            <View style={styles.billRow}>
-              <Text>Packing fee</Text>
-              <Text>₹{PACKING}</Text>
-            </View>
-
-            <View style={styles.divider} />
-
-            <View style={styles.billRow}>
-              <Text style={styles.grand}>Grand Total</Text>
-              <Text style={styles.grand}>₹{grandTotal}</Text>
-            </View>
-          </View>
+              {/* BILL CARD */}
+              <BillCard
+                total={total}
+                gst={GST}
+                packing={PACKING}
+                grandTotal={grandTotal}
+              />
+            </>
+          )}
         </ScrollView>
 
         {/* STICKY CONTINUE BUTTON */}
@@ -327,5 +330,30 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     fontSize: 16,
+  },
+  emptyContainer: {
+    marginTop: 100,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+  },
+
+  emptyText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#777",
+  },
+
+  shopBtn: {
+    marginTop: 15,
+    backgroundColor: Colors.hatari.red,
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    borderRadius: 20,
+  },
+
+  shopBtnText: {
+    color: "#fff",
+    fontWeight: "600",
   },
 });
