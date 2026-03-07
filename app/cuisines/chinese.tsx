@@ -9,9 +9,8 @@ const chinese = () => {
         <CustomStack />
       </View>
 
-      <ScrollView style={{ paddingVertical: 20, paddingHorizontal: 10 }}>
-        {/* <HomeFoodCard /> */}
-      </ScrollView>
+      <ScrollView
+        style={{ paddingVertical: 20, paddingHorizontal: 10 }}></ScrollView>
     </>
   );
 };
