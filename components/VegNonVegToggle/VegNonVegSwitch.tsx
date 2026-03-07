@@ -1,15 +1,22 @@
+import { vegFilterAtom } from "@/src/Store/vegFilterAtom";
 import { Colors } from "@/utils/Colors";
-import React, { useState } from "react";
+import { useAtom } from "jotai";
+import React from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 
 const VegNonVegSwitch = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const [vegFilter, setVegFilter] = useAtom(vegFilterAtom);
+
+  const isVeg = vegFilter === "veg";
+
+  const toggleSwitch = () => {
+    setVegFilter(isVeg ? "nonVeg" : "veg");
+  };
 
   return (
     <View
       style={{
-        backgroundColor: isEnabled ? "#e0ffe0" : "#ffe0e0",
+        backgroundColor: isVeg ? "#e0ffe0" : "#ffe0e0",
         borderRadius: 25,
         paddingHorizontal: 16,
         flexDirection: "row",
@@ -18,17 +25,18 @@ const VegNonVegSwitch = () => {
       <Text
         style={{
           fontWeight: "600",
-          color: isEnabled ? "#027a2cff" : "#860000ff",
+          color: isVeg ? "#027a2cff" : "#860000ff",
+          marginRight: 8,
         }}>
-        {isEnabled ? "Veg" : "Non Veg"}
+        {isVeg ? "Veg" : "Non Veg"}
       </Text>
 
       <Switch
         hitSlop={20}
         trackColor={{ false: "#860000ff", true: "#027a2cff" }}
-        thumbColor={isEnabled ? "#01bf44" : Colors.hatari.red}
+        thumbColor={isVeg ? "#01bf44" : Colors.hatari.red}
         onValueChange={toggleSwitch}
-        value={isEnabled}
+        value={isVeg}
       />
     </View>
   );
