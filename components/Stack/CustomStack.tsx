@@ -1,4 +1,3 @@
-import VegNonVegSwitch from "@/components/VegNonVegToggle/VegNonVegSwitch";
 import { Colors } from "@/utils/Colors";
 import { Feather } from "@expo/vector-icons";
 import { Image } from "expo-image";
@@ -30,8 +29,6 @@ const CustomStack = () => {
           style={styles.logo}
           contentFit="contain"
         />
-
-        <VegNonVegSwitch />
       </View>
     </SafeAreaView>
   );

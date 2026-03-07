@@ -30,7 +30,7 @@ const myorders = () => {
 
   return (
     <>
-      <ScrollView style={{ paddingHorizontal: 10 }}>
+      <ScrollView style={{ paddingHorizontal: 10, paddingTop: 14 }}>
         <OrderedItemsCard
           orderId="#e45378db"
           items={orderItems}

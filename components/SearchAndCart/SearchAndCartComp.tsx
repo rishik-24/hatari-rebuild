@@ -12,7 +12,7 @@ const SearchAndCartComp = () => {
 
   const [cart] = useAtom(cartAtom);
 
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const cartCount = cart.length;
   return (
     <View
       style={{
