@@ -1,10 +1,11 @@
+import MenuTabOptions from "@/components/MenuTabs/MenuTabOptions";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 const menu = () => {
   return (
-    <View>
-      <Text>menu</Text>
+    <View style={{ flex: 1, position: "fixed", top: 0 }}>
+      <MenuTabOptions />
     </View>
   );
 };
