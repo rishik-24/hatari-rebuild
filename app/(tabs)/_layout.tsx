@@ -1,3 +1,4 @@
+import VegNonVegSwitch from "@/components/VegNonVegToggle/VegNonVegSwitch";
 import { Colors } from "@/utils/Colors";
 import {
   AntDesign,
@@ -13,6 +14,8 @@ import { View } from "react-native";
 
 export default function TabLayout() {
   const [selected, setSelected] = useState<string>("");
+
+  const [vegOnly, setVegOnly] = useState(false);
 
   return (
     <Tabs
@@ -96,6 +99,12 @@ export default function TabLayout() {
               size={24}
               color={color}
             />
+          ),
+
+          headerRight: () => (
+            <View style={{ paddingRight: 10 }}>
+              <VegNonVegSwitch />
+            </View>
           ),
         }}
       />
