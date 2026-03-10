@@ -4,7 +4,7 @@ import CustomStack from "@/components/Stack/CustomStack";
 import { cartAtom } from "@/src/Store/cartAtom";
 import { Colors } from "@/utils/Colors";
 import { Feather } from "@expo/vector-icons";
-import BottomSheet from "@gorhom/bottom-sheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
 import { useAtom } from "jotai";
 import { useRef } from "react";
@@ -49,10 +49,10 @@ export default function CartScreen() {
 
   const grandTotal = total + GST + PACKING;
 
-  const sheetRef = useRef<BottomSheet>(null);
+  const sheetRef = useRef<BottomSheetModal>(null);
 
   const openSheet = () => {
-    sheetRef.current?.expand();
+    sheetRef.current?.present();
   };
 
   return (

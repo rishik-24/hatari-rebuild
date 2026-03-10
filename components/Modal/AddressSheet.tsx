@@ -1,29 +1,40 @@
 import { Colors } from "@/utils/Colors";
 import { Feather } from "@expo/vector-icons";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import {
+  BottomSheetBackdrop,
+  BottomSheetModal,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
 import React, { forwardRef, useMemo } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 
-const AddressSheet = forwardRef<BottomSheet>((props, ref) => {
+const AddressSheet = forwardRef<BottomSheetModal>((props, ref) => {
   const snapPoints = useMemo(() => ["75%"], []);
 
   const closeSheet = () => {
     if (ref && typeof ref !== "function") {
-      ref.current?.close();
+      ref.current?.dismiss();
     }
   };
 
   return (
-    <BottomSheet
+    <BottomSheetModal
       ref={ref}
-      index={-1}
       snapPoints={snapPoints}
       enablePanDownToClose
       handleIndicatorStyle={{
         backgroundColor: Colors.hatari.lightGrey,
         width: 40,
-      }}>
+      }}
+      backdropComponent={(backdropProps) => (
+        <BottomSheetBackdrop
+          {...backdropProps}
+          appearsOnIndex={0}
+          disappearsOnIndex={-1}
+          opacity={0.45}
+        />
+      )}>
       <BottomSheetView style={styles.container}>
         {/* Close Button */}
         <TouchableOpacity
@@ -87,7 +98,7 @@ const AddressSheet = forwardRef<BottomSheet>((props, ref) => {
           <Text style={styles.changeText}>Change address</Text>
         </TouchableOpacity>
       </BottomSheetView>
-    </BottomSheet>
+    </BottomSheetModal>
   );
 });
 

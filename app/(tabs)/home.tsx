@@ -5,7 +5,7 @@ import CuisineSheet, { CuisineKey } from "@/components/Modal/CuisineSheet";
 import PreOptions from "@/components/PrefarenceOptions/PreOptions";
 import SearchAndCartComp from "@/components/SearchAndCart/SearchAndCartComp";
 import { Colors } from "@/utils/Colors";
-import BottomSheet from "@gorhom/bottom-sheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import React, { useRef, useState } from "react";
 import {
   ScrollView,
@@ -16,12 +16,12 @@ import {
 } from "react-native";
 
 const Home = () => {
-  const cuisineSheetRef = useRef<BottomSheet>(null);
+  const cuisineSheetRef = useRef<BottomSheetModal>(null);
   const [selectedCuisine, setSelectedCuisine] = useState<CuisineKey | null>(null);
 
   const handleCuisinePress = (cuisine: CuisineKey) => {
     setSelectedCuisine(cuisine);
-    cuisineSheetRef.current?.expand();
+    cuisineSheetRef.current?.present();
   };
 
   return (

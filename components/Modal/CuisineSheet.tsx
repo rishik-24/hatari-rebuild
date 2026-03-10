@@ -1,6 +1,10 @@
 import { Colors } from "@/utils/Colors";
 import { Feather } from "@expo/vector-icons";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import {
+  BottomSheetBackdrop,
+  BottomSheetModal,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
 import React, { forwardRef, useMemo } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -90,28 +94,35 @@ const CUISINE_OPTIONS: Record<CuisineKey, CuisineOption[]> = {
   ],
 };
 
-const CuisineSheet = forwardRef<BottomSheet, Props>(({ cuisine }, ref) => {
-  const snapPoints = useMemo(() => ["45%"], []);
+const CuisineSheet = forwardRef<BottomSheetModal, Props>(({ cuisine }, ref) => {
+  const snapPoints = useMemo(() => ["50%"], []);
 
   const title = cuisine ? `${CUISINE_TITLES[cuisine]} Menu` : "";
   const options = cuisine ? CUISINE_OPTIONS[cuisine] : [];
 
   const closeSheet = () => {
     if (ref && typeof ref !== "function") {
-      ref.current?.close();
+      ref.current?.dismiss();
     }
   };
 
   return (
-    <BottomSheet
+    <BottomSheetModal
       ref={ref}
-      index={-1}
       snapPoints={snapPoints}
       enablePanDownToClose
       handleIndicatorStyle={{
         backgroundColor: Colors.hatari.lightGrey,
         width: 40,
-      }}>
+      }}
+      backdropComponent={(backdropProps) => (
+        <BottomSheetBackdrop
+          {...backdropProps}
+          appearsOnIndex={0}
+          disappearsOnIndex={-1}
+          opacity={0.5}
+        />
+      )}>
       <BottomSheetView style={styles.container}>
         <TouchableOpacity
           onPress={closeSheet}
@@ -145,7 +156,7 @@ const CuisineSheet = forwardRef<BottomSheet, Props>(({ cuisine }, ref) => {
           </>
         )}
       </BottomSheetView>
-    </BottomSheet>
+    </BottomSheetModal>
   );
 });
 
