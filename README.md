@@ -1,4 +1,4 @@
-## Food Ordering Application 🚀
+## Food Ordering Application 🍜
 
 A modern React Native food ordering application built with Expo, TypeScript, and Jotai.
 Hatari allows users to browse food categories, explore menus, and order delicious meals with a smooth mobile experience.
@@ -9,7 +9,7 @@ This project focuses on clean UI, performance, and scalable architecture for bot
 
 **Rishik Roy**
 
-GitHub: https://github.com/rishik-24
+LinkedIn : https://www.linkedin.com/in/rishik-roy-7828093ab/
 
 ## ✨ Features
 
@@ -36,15 +36,15 @@ GitHub: https://github.com/rishik-24
 
 | Technology                | Purpose                 |
 | ------------------------- | ----------------------- |
-| **React Native**          | Mobile app framework    |
-| **Expo**                  | Development environment |
-| **TypeScript**            | Type safety             |
-| **Expo Router**           | Navigation              |
-| **Jotai**                 | Global state management |
-| **Tailwind / NativeWind** | Styling                 |
-| **React Native Tab View** | Category tabs           |
-| **Gorhom Bottom Sheet**   | Address modal           |
-| **Expo Vector Icons**     | Icons                   |
+| React Native              | Mobile app framework    |
+| Expo                      | Development environment |
+| TypeScript                | Type safety             |
+| Expo Router               | Navigation              |
+| Jotai                     | Global state management |
+| Tailwind / NativeWind     | Styling                 |
+| React Native Tab View     | Category tabs           |
+| Gorhom Bottom Sheet       | Address modal           |
+| Expo Vector Icons         | Icons                   |
 
 ```
 
@@ -79,6 +79,7 @@ Hatari
 
 📜 License
 This project is licensed under the MIT License.
+
 
 ⭐ If you like this project, consider starring the repository!
 
