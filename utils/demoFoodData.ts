@@ -199,8 +199,7 @@ export const foods: Food[] = [
     id: "601",
     name: "Chilli Chicken",
     price: 220,
-    image:
-      "https://img.freepik.com/premium-photo/chilli-chicken-dry-is-popular-indochinese-dish-chicken-hakka-chinese-heritage_1095465-4592.jpg",
+    image: "https://dragondelivery.in/wp-content/uploads/2025/02/chchd.jpeg",
     description:
       "Spicy Kolkata Chinese chilli chicken with onion, capsicum and soy sauce.",
     isVeg: false,
